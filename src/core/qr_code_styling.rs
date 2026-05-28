@@ -28,6 +28,7 @@ use crate::types::OutputFormat;
 ///
 /// let svg = qr.render_svg().unwrap();
 /// ```
+#[ocaml_sig]
 pub struct QRCodeStyling {
     options: QRCodeStylingOptions,
     matrix: QRMatrix,

@@ -1,6 +1,7 @@
 //! Image/logo embedding options.
 
 /// Options for embedding an image/logo in the QR code.
+#[ocaml_sig]
 #[derive(Debug, Clone, PartialEq)]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub struct ImageOptions {

@@ -4,6 +4,7 @@ use super::{Color, Gradient};
 use crate::types::{CornerSquareType, CornerDotType};
 
 /// Options for styling QR code corner squares (finder patterns).
+#[ocaml_sig]
 #[derive(Debug, Clone, PartialEq)]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub struct CornersSquareOptions {

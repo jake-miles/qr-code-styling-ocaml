@@ -8,6 +8,7 @@ use crate::error::{QRError, Result};
 use crate::types::ShapeType;
 
 /// Main configuration for QR code styling.
+#[ocaml_sig]
 #[derive(Debug, Clone, PartialEq)]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub struct QRCodeStylingOptions {

@@ -1,6 +1,7 @@
 //! QR code shape type variants.
 
 /// Defines the overall shape of the QR code.
+#[ocaml_sig]
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Default)]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 #[cfg_attr(feature = "serde", serde(rename_all = "lowercase"))]

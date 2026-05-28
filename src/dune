@@ -1,0 +1,14 @@
+(rule
+ (targets qr_code_styling.a)
+ (deps (glob_files *.rs))
+ (action
+  (progn
+   (run cargo build --target-dir %{project_root}/../../target --release)
+   (run mv %{project_root}/../../target/release/qr_code_styling.a qr_code_styling.a))))
+
+(library
+ (name qr_code_styling)
+ (public_name qr-code-styling)
+ (foreign_archives qr_code_styling)
+ (c_library_flags
+  (-lpthread -lc -lm)))

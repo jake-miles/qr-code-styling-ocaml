@@ -3,6 +3,7 @@
 use crate::types::{ErrorCorrectionLevel, Mode};
 
 /// Options for QR code generation.
+#[ocaml_sig]
 #[derive(Debug, Clone, PartialEq)]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub struct QROptions {

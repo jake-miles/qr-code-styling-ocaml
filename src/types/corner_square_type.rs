@@ -1,6 +1,7 @@
 //! QR code corner square type variants.
 
 /// Defines the visual style for QR code corner squares (finder patterns).
+#[ocaml_sig]
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Default)]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 #[cfg_attr(feature = "serde", serde(rename_all = "kebab-case"))]

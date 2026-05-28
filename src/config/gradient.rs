@@ -4,6 +4,7 @@ use super::Color;
 use crate::types::GradientType;
 
 /// A color stop in a gradient.
+#[ocaml_sig]
 #[derive(Debug, Clone, PartialEq)]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub struct ColorStop {

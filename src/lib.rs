@@ -56,3 +56,40 @@ pub use types::{
     CornerDotType, CornerSquareType, DotType, ErrorCorrectionLevel, GradientType, Mode,
     OutputFormat, ShapeType,
 };
+
+pub use ocaml_generate::{generate_svg, apply_border}
+
+#ocaml::func
+#ocaml::sig("qr_code_styling_options -> (string, 'Msg of string) result")
+pub fn generate_svg(options: QRCodeStylingOptions) -> Result<String> {
+  QRCodeStyling::new(options).render(format);
+}
+
+#ocaml::func
+#ocaml::sig("string -> qr_border_options -> int -> int -> (string, 'Msg of string) result")
+pub fn apply_border_to_svg(svg: String, options: QRBorderOptions, width: u8, height: u8) -> String {
+  QRBorderPlugin::new(QRBorderOptions::new(options)).apply(svg, width, height)
+}
+
+#[ocaml_sig]
+enum RasterFormat {
+  Png,
+  Jpeg,
+  WebP
+}
+
+#ocaml::func
+#ocaml::sig("string -> int -> int -> raster_format -> (bytes, 'Msg of string) result")
+pub fn render_raster_from_svg(svg: &str, width: u8, height: u8, format: RasterFormat) -> Result<Vec<u8>> {
+  RasterRenderer::render(svg, width, height, match format {
+    RasterFormat::Png => OutputFormat::Png,
+    RasterFormat::Jpeg => OutputFormat::Jpeg,
+    RasterFormat::WebP => OutputFormat::WebP
+  })
+}
+
+#ocaml::func
+#ocaml::sig("string -> int -> int -> (bytes, 'Msg of string) result")
+pub fn render_pdf_from_svg(svg: &str, width: u8, height: u8) -> Result<Vec<u8>> {
+  PdfRenderer::render_pdf_from_svg(svg, width, height)
+}

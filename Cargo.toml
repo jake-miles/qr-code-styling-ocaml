@@ -14,12 +14,14 @@ readme = "README.md"
 exclude = ["*.svg", "*.pdf", "*.png", "*.jpg", "*.webp", "!examples/logo.png"]
 
 [lib]
-crate-type = ["lib"]
+crate-type = ["staticlib"]
 
 [dependencies]
 qrcode = "0.14"
 thiserror = "2.0"
 base64 = "0.22"
+ocaml = "*"
+ocaml-build = "*"
 
 # Image processing
 image = { version = "0.25", default-features = false, features = ["png", "jpeg", "webp"] }
