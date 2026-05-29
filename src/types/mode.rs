@@ -1,7 +1,8 @@
 //! QR code encoding mode variants.
 
 /// Encoding mode for QR code data.
-#[ocaml_sig]
+#[ocaml::sig]
+#[derive(ocaml::ToValue, ocaml::FromValue)]
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub enum Mode {

@@ -1,7 +1,8 @@
 //! QR code error correction levels.
 
 /// Error correction level for QR codes.
-#[ocaml_sig]
+#[ocaml::sig]
+#[derive(ocaml::ToValue, ocaml::FromValue)]
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Default)]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub enum ErrorCorrectionLevel {

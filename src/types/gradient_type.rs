@@ -1,7 +1,8 @@
 //! Gradient type variants.
 
 /// Defines the type of gradient for coloring.
-#[ocaml_sig]
+#[ocaml::sig]
+#[derive(ocaml::ToValue, ocaml::FromValue)]
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Default)]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 #[cfg_attr(feature = "serde", serde(rename_all = "kebab-case"))]

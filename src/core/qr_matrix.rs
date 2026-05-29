@@ -5,7 +5,7 @@ use crate::error::{QRError, Result};
 use qrcode::{QrCode, Version};
 
 /// Wrapper around the QR code matrix providing efficient module access.
-#[ocaml_sig]
+#[ocaml::sig]
 #[derive(Debug, Clone)]
 pub struct QRMatrix {
     /// Flat array of module values (true = dark, false = light).

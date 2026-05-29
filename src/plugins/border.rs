@@ -7,7 +7,8 @@
 use std::collections::HashMap;
 
 /// Position for specifying where decorations should be placed.
-#[ocaml_sig]
+#[ocaml::sig]
+#[derive(ocaml::FromValue)]
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub enum Position {
@@ -18,7 +19,8 @@ pub enum Position {
 }
 
 /// Type of decoration that can be applied to the QR code borders.
-#[ocaml_sig]
+#[ocaml::sig]
+#[derive(ocaml::FromValue)]
 #[derive(Debug, Clone, PartialEq)]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub enum DecorationType {
@@ -29,7 +31,8 @@ pub enum DecorationType {
 }
 
 /// Style options for border elements.
-#[ocaml_sig]
+#[ocaml::sig]
+#[derive(ocaml::FromValue)]
 #[derive(Debug, Clone, PartialEq)]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub struct BorderOptions {
@@ -70,6 +73,7 @@ impl BorderOptions {
 
 /// Decoration configuration for text or image decorations.
 #[derive(Debug, Clone, PartialEq)]
+#[derive(ocaml::FromValue)]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub struct BorderDecoration {
     /// Type of decoration (text or image)

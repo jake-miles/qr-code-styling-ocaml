@@ -4,7 +4,8 @@ use super::{Color, Gradient};
 use crate::types::DotType;
 
 /// Options for styling QR code dots.
-#[ocaml_sig]
+#[ocaml::sig]
+#[derive(ocaml::ToValue, ocaml::FromValue)]
 #[derive(Debug, Clone, PartialEq)]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub struct DotsOptions {

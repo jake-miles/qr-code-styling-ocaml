@@ -50,46 +50,63 @@ pub use config::{
     Gradient, ImageOptions, QRCodeStylingBuilder, QRCodeStylingOptions, QROptions,
 };
 pub use core::QRCodeStyling;
-pub use error::{QRError, Result};
-pub use plugins::{BorderDecoration, BorderOptions, BorderPlugin, Position, QRBorderOptions};
+pub use plugins::{BorderDecoration, BorderOptions, BorderPlugin, Position};
 pub use types::{
     CornerDotType, CornerSquareType, DotType, ErrorCorrectionLevel, GradientType, Mode,
     OutputFormat, ShapeType,
 };
 
-pub use ocaml_generate::{generate_svg, apply_border}
+// the following are callable from ocaml.
 
-#ocaml::func
-#ocaml::sig("qr_code_styling_options -> (string, 'Msg of string) result")
-pub fn generate_svg(options: QRCodeStylingOptions) -> Result<String> {
-  QRCodeStyling::new(options).render(format);
+use std::collections::HashMap;
+
+#[ocaml::sig]
+#[derive(thiserror::Error, Debug, ocaml::ToValue)]
+pub enum QRError {
+  #[error("QRCodeStyling (the underlying rust crate) raised an error")]
+  QRError(String)
 }
 
-#ocaml::func
-#ocaml::sig("string -> qr_border_options -> int -> int -> (string, 'Msg of string) result")
-pub fn apply_border_to_svg(svg: String, options: QRBorderOptions, width: u8, height: u8) -> String {
-  QRBorderPlugin::new(QRBorderOptions::new(options)).apply(svg, width, height)
+#[ocaml::func]
+#[ocaml::sig("qr_code_styling_options -> (string, 'Msg of string) result")]
+pub fn generate_svg(options: QRCodeStylingOptions) -> Result<String, QRError> {
+  QRCodeStyling::new(options)
+    .and_then(|qr| qr.render_svg())
+    .map_err(|e| QRError::QRError(e.to_string()))
 }
 
-#[ocaml_sig]
-enum RasterFormat {
-  Png,
-  Jpeg,
-  WebP
+#[ocaml::sig]
+#[derive(ocaml::FromValue)]
+pub struct QRBorderOptions {
+    /// Main border options
+    pub border: BorderOptions,
+    /// Corner roundness (0.0 = square, 1.0 = fully round)
+    pub round: f64,
+    /// Optional inner border
+    pub border_inner: Option<BorderOptions>,
+    /// Optional outer border
+    pub border_outer: Option<BorderOptions>,
+    /// Decorations mapped by position
+    pub decorations: std::collections::LinkedList<(Position, BorderDecoration)>,
 }
 
-#ocaml::func
-#ocaml::sig("string -> int -> int -> raster_format -> (bytes, 'Msg of string) result")
-pub fn render_raster_from_svg(svg: &str, width: u8, height: u8, format: RasterFormat) -> Result<Vec<u8>> {
-  RasterRenderer::render(svg, width, height, match format {
-    RasterFormat::Png => OutputFormat::Png,
-    RasterFormat::Jpeg => OutputFormat::Jpeg,
-    RasterFormat::WebP => OutputFormat::WebP
-  })
-}
+#[ocaml::func]
+#[ocaml::sig("string -> qr_border_options -> int -> int -> string")]
+pub fn apply_border_to_svg(svg: &str, options: QRBorderOptions, width: u32, height: u32) -> String {
 
-#ocaml::func
-#ocaml::sig("string -> int -> int -> (bytes, 'Msg of string) result")
-pub fn render_pdf_from_svg(svg: &str, width: u8, height: u8) -> Result<Vec<u8>> {
-  PdfRenderer::render_pdf_from_svg(svg, width, height)
+  let mut decorations = HashMap::new();
+  for (k, v) in options.decorations.iter() {
+    decorations.insert(k.clone(), v.clone());
+  }
+
+  let options_with_hashmap = plugins::border::QRBorderOptions {
+    border: options.border,
+    round: options.round,
+    border_inner: options.border_inner,
+    border_outer: options.border_outer,
+    decorations
+  };
+
+  BorderPlugin::new(options_with_hashmap)
+    .apply(svg, width, height)
 }

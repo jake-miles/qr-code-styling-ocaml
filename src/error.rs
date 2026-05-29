@@ -3,6 +3,7 @@
 use thiserror::Error;
 
 /// Result type alias using QRError.
+#[ocaml::sig]
 pub type Result<T> = std::result::Result<T, QRError>;
 
 /// Errors that can occur during QR code generation and styling.
