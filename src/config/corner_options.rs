@@ -5,7 +5,7 @@ use crate::types::{CornerSquareType, CornerDotType};
 
 /// Options for styling QR code corner squares (finder patterns).
 #[ocaml::sig]
-#[derive(ocaml::ToValue, ocaml::FromValue)]
+#[derive(ocaml::FromValue)]
 #[derive(Debug, Clone, PartialEq)]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub struct CornersSquareOptions {
@@ -57,7 +57,7 @@ impl CornersSquareOptions {
 
 /// Options for styling QR code corner dots (center of finder patterns).
 #[ocaml::sig]
-#[derive(ocaml::ToValue, ocaml::FromValue)]
+#[derive(ocaml::FromValue)]
 #[derive(Debug, Clone, PartialEq)]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub struct CornersDotOptions {

@@ -4,7 +4,7 @@ use crate::error::{QRError, Result};
 
 /// RGBA color representation.
 #[ocaml::sig]
-#[derive(ocaml::ToValue, ocaml::FromValue)]
+#[derive(ocaml::FromValue)]
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub struct Color {

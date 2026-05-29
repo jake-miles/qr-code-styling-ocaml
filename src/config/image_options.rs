@@ -2,7 +2,7 @@
 
 /// Options for embedding an image/logo in the QR code.
 #[ocaml::sig]
-#[derive(ocaml::ToValue, ocaml::FromValue)]
+#[derive(ocaml::FromValue)]
 #[derive(Debug, Clone, PartialEq)]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub struct ImageOptions {
