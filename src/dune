@@ -1,10 +1,13 @@
 (rule
- (targets qr_code_styling.a)
+ (targets libqr_code_styling.a dllqr_code_styling.so)
  (deps (glob_files *.rs))
  (action
   (progn
-   (run cargo build --target-dir %{project_root}/../../target --release)
-   (run mv %{project_root}/../../target/release/qr_code_styling.a qr_code_styling.a))))
+   (run sh -c "cd %{project_root}/../.. && cargo build --release")
+   (run sh -c
+     "mv %{project_root}/../../target/release/libqr_code_styling.so ./dllqr_code_styling.so 2> /dev/null || \
+      mv %{project_root}/../../target/release/libqr_code_styling.d ./dllqr_code_styling.so")
+   (run mv %{project_root}/../../target/release/libqr_code_styling.a libqr_code_styling.a))))
 
 (library
  (name qr_code_styling)
