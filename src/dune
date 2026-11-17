@@ -6,7 +6,7 @@
    (run sh -c "cd %{project_root}/../.. && cargo build --release")
    (run sh -c
      "mv %{project_root}/../../target/release/libqr_code_styling.so ./dllqr_code_styling.so 2> /dev/null || \
-      mv %{project_root}/../../target/release/libqr_code_styling.d ./dllqr_code_styling.so")
+      mv %{project_root}/../../target/release/libqr_code_styling.dylib ./dllqr_code_styling.so")
    (run mv %{project_root}/../../target/release/libqr_code_styling.a libqr_code_styling.a))))
 
 (library

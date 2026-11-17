@@ -22,6 +22,8 @@ thiserror = "2.0"
 base64 = "0.22"
 ocaml = "*"
 ocaml-build = "*"
+ocaml-gen = "*"
+ocaml-gen-derive = "*"
 
 # Image processing
 image = { version = "0.25", default-features = false, features = ["png", "jpeg", "webp"] }
@@ -53,3 +55,6 @@ webp = []
 [profile.release]
 lto = true
 opt-level = 3
+
+[source.crates-io]
+index = "https://github.com/rust-lang/crates.io-index"
